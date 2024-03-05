@@ -1,1 +1,4 @@
-
+- name: Import a role
+  ansible.builtin.import_role:
+    name: common
+    asks_from: golang
