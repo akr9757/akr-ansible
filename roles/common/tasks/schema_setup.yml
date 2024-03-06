@@ -2,7 +2,7 @@
   when: schema_setup == "mongo"
   block:
     - name: Copy Mongo Repo
-      ansible.builtin.file:
+      ansible.builtin.copy:
         src: mongo.repo
         dest: /etc/yum.repos.d/mongo.repo
 
