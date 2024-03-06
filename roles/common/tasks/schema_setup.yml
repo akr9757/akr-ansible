@@ -12,7 +12,7 @@
         state: installed
 
     - name: Load Schema
-      ansible.builtin.shell: mongo --host mongodb-dev.akrdevopsb72.online </app/schema/{{component}}.js
+      ansible.builtin.shell: mongo --host {{ lookup('amazon.aws.aws_ssm', 'catalogue-dev.mongodb_url', region='us-east-1' ) }} </app/schema/{{component}}.js
 
 - name: Load Mysql Schema
   when: schema_setup == "mysql"
@@ -23,4 +23,4 @@
         state: installed
 
     - name: Load Schema
-      ansible.builtin.shell: mysql -h mysql-dev.akrdevopsb72.online -uroot -p${mysql_root_password} < /app/schema/{{component}}.sql
+      ansible.builtin.shell: mysql -h {{ lookup('amazon.aws.aws_ssm', 'shipping-dev.db_host', region='us-east-1' ) }} -u{{ lookup('amazon.aws.aws_ssm', 'shipping-dev.db_user', region='us-east-1' ) }} -p{{ lookup('amazon.aws.aws_ssm', 'shipping-dev.db_password', region='us-east-1' ) }} < /app/schema/{{component}}.sql

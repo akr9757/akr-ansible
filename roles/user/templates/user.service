@@ -2,9 +2,9 @@
 Description = User Service
 [Service]
 User=roboshop
-Environment=MONGO=true
-Environment=REDIS_HOST=redis-dev.akrdevopsb72.online
-Environment=MONGO_URL="mongodb://mongodb-dev.akrdevopsb72.online:27017/users"
+Environment={{ lookup('amazon.aws.aws_ssm', 'user-dev.environment', region='us-east-1' ) }}
+Environment=REDIS_HOST={{ lookup('amazon.aws.aws_ssm', 'user-dev.redis_host', region='us-east-1' ) }}
+Environment=MONGO_URL="mongodb://{{ lookup('amazon.aws.aws_ssm', 'user-dev.mongo_url', region='us-east-1' ) }}:27017/users"
 ExecStart=/bin/node /app/server.js
 SyslogIdentifier=user
 
